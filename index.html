@@ -1,0 +1,148 @@
+  
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAMZ-PROJECT-V2 GET KEY</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #050914;
+  color: white;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 380px;
+  padding: 30px 22px;
+  background: #101c30;
+  border: 1px solid #087cff;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 0 25px #087cff30;
+}
+
+.logo {
+  font-size: 42px;
+  font-weight: bold;
+  color: #168cff;
+}
+
+h2 {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+p {
+  color: #a8b8ce;
+  font-size: 13px;
+}
+
+.keybox {
+  padding: 17px 10px;
+  margin: 25px 0;
+  background: #050914;
+  border: 1px solid #087cff;
+  border-radius: 9px;
+  color: #39a5ff;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 9px;
+  background: #087cff;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.copy {
+  background: #20334d;
+}
+
+#status {
+  margin-top: 18px;
+  min-height: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="logo">♛ RP</div>
+  <h2>RAMZ-PROJECT-V2</h2>
+  <p>MEMBER KEY GENERATOR</p>
+
+  <div class="keybox" id="key">
+    BELUM ADA KEY
+  </div>
+
+  <button onclick="generateKey()">
+    GENERATE KEY
+  </button>
+
+  <button class="copy" onclick="copyKey()">
+    COPY KEY
+  </button>
+
+  <p id="status">WELCOME TO RAMZ PROJECT</p>
+</div>
+
+<script>
+let currentKey = "";
+
+function generateKey() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const random = new Uint8Array(12);
+  crypto.getRandomValues(random);
+
+  let code = "";
+
+  for (let i = 0; i < random.length; i++) {
+    code += chars[random[i] % chars.length];
+  }
+
+  currentKey = "RAMZ-" + code;
+
+  document.getElementById("key").textContent = currentKey;
+  document.getElementById("status").textContent =
+    "KEY BERHASIL DIBUAT!";
+}
+
+async function copyKey() {
+  const status = document.getElementById("status");
+
+  if (!currentKey) {
+    status.textContent = "GENERATE KEY DULU!";
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(currentKey);
+    status.textContent = "KEY BERHASIL DISALIN!";
+  } catch {
+    status.textContent = "Silakan salin key secara manual.";
+  }
+}
+</script>
+
+</body>
+</html>
